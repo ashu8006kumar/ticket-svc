@@ -13,7 +13,7 @@ import io.arha.ticketsvc.dto.TicketWrapperDto;
 
 @RestController
 @RequestMapping("/home")
-public class HomeController {
+public class HomeController { 
 	@GetMapping("")
 	public String welcome() {
 
