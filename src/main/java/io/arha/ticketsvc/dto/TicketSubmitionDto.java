@@ -1,17 +1,21 @@
 package io.arha.ticketsvc.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.lang.NonNull;
+
+import io.arha.ticketsvc.enums.TicketType;
 
 public class TicketSubmitionDto {
 
 	@NonNull
 	@NotBlank
-	@Size(max=100)
+	@Size(max = 100)
 	private String ticketSubject;
-	private String type;
+	@NotNull
+	private TicketType type;
 	private String description;
 	private String link;
 
@@ -23,11 +27,11 @@ public class TicketSubmitionDto {
 		this.ticketSubject = ticketSubject;
 	}
 
-	public String getType() {
+	public TicketType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TicketType type) {
 		this.type = type;
 	}
 
@@ -53,7 +57,7 @@ public class TicketSubmitionDto {
 	@Override
 	public String toString() {
 		return "TicketSubmitionDto [ticketSubject=" + ticketSubject + ", type=" + type + ", description=" + description
-				+"]";
+				+ "]";
 	}
 
 }
