@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.arha.ticketsvc.dto.TicketDto;
 import io.arha.ticketsvc.dto.TicketWrapperDto;
+import io.arha.ticketsvc.props.EmailProps;
 import io.arha.ticketsvc.service.TicketService;
 
 @RestController
@@ -18,11 +19,14 @@ public class HomeController {
 
 	@Autowired
 	private TicketService ticketService;
+ 
+	@Autowired
+	private EmailProps emailProps;
 
 	@GetMapping("")
-	public String welcome() {
-
-		return "Hello@ from spring boot.";
+	public String welcome() {  
+		return emailProps.getHost();
+				
 	}
 
 	@GetMapping("/{username}")
