@@ -1,5 +1,7 @@
 package io.arha.ticketsvc.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,18 @@ public class RegisterServiceImpl implements RegisterServcie {
 		}else {
 			throw new RuntimeException("User already exits!");
 		} 
+	}
+
+
+	@Override
+	public void findAndVerifyUserByLinkId(String registerLinkId) { 
+		RegisterUser registerUser=registerUserRepository.findByRegisterLinkIdAndExpiredOnGreaterThan(registerLinkId, new Date());
+		if(registerUser==null) {
+			// either link is wrong / expired / used
+		}else {
+			// count method and check user in users table , user already exits
+			// copy data from RegisterUser to user and send a welcome email to end user
+		}
 	}
 
 }

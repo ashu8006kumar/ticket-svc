@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
 		message.setSubject("Ticket Service | Verification email ");
 		String emailText = String.format(
 				"Hi %s,\nGreeting from Ticket Service IT TEAM.\nPlease click on link to complete your varification.\n%s",
-				registerUser.getName(), "http://localhost:8081/register/vrify/" + registerUser.getRegisterLinkId());
+				registerUser.getName(), "http://localhost:8081/register/verify/" + registerUser.getRegisterLinkId());
 
 		message.setText(emailText);
 

@@ -26,7 +26,7 @@ public class RegisterUser {
 	@Column(name = "register_link_id", nullable = false)
 	private String registerLinkId;
 
-	@Column(name = "enpiredOn", nullable = false)
+	@Column(name = "enpired_on", nullable = false)
 	private Date expiredOn;
 
 	public Long getId() {
