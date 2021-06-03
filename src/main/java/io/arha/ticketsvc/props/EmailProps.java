@@ -10,6 +10,15 @@ public class EmailProps {
 	private int port;
 	private String username;
 	private String password;
+	private String from;
+
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
 
 	public EmailProps() {
 	}

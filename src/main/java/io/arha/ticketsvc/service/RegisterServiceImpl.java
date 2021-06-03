@@ -18,6 +18,8 @@ public class RegisterServiceImpl implements RegisterServcie {
 	private Util  util;
 	@Autowired
 	private RegisterUserRepository registerUserRepository;
+	@Autowired
+	private EmailService emailService;
 	
 	
 	@Override
@@ -31,6 +33,7 @@ public class RegisterServiceImpl implements RegisterServcie {
 			registerUser.setRegisterLinkId(util.getUniqueCode());
 			registerUser.setExpiredOn(util.addDays(2));
 			registerUserRepository.save(registerUser); 
+			emailService.sendRegisterUserEmail(registerUser);
 		}else {
 			throw new RuntimeException("User already exits!");
 		} 
