@@ -21,7 +21,7 @@ public class HomeController {
 
 	@GetMapping("")
 	public String welcome() {   
-		return "";
+		return "welcome";
 	}
 
 	@GetMapping("/{username}")
