@@ -2,10 +2,19 @@ package io.arha.ticketsvc.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +40,9 @@ public class HomeController {
 
 	@Autowired
 	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@GetMapping("")
 	public String welcome() {
@@ -38,7 +50,10 @@ public class HomeController {
 	}
 
 	@PostMapping("/auth")
-	public TokenDto login(@RequestBody LoginDto loginDto) {
+	public TokenDto login(@Valid @RequestBody LoginDto loginDto) {
+		authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+		
 		UserDetails userDetail = userDetailsService.loadUserByUsername(loginDto.getUsername());
 		return new TokenDto(jwtUtil.generateToken(userDetail));
 	}

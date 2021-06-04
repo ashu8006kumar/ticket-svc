@@ -8,4 +8,5 @@ import io.arha.ticketsvc.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
    long countByUsername(String username);
+   User findByUsername(String username);
 }
