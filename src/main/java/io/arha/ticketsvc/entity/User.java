@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @Entity(name = "users")
 public class User {
@@ -85,6 +87,16 @@ public class User {
 
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+	
+	@PrePersist
+	void saveDateCreated() {
+		this.createdDate= new Date();
+	}
+	
+	@PreUpdate
+	void savelastUpdatedDate() {
+		this.lastUpdated= new Date();
 	}
 
 }
