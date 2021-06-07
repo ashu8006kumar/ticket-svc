@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import io.arha.ticketsvc.dto.RegisterDto;
 import io.arha.ticketsvc.entity.RegisterUser;
+import io.arha.ticketsvc.entity.User;
 import io.arha.ticketsvc.repository.RegisterUserRepository;
 import io.arha.ticketsvc.repository.UserRepository;
 import io.arha.ticketsvc.util.Util;
@@ -45,11 +46,20 @@ public class RegisterServiceImpl implements RegisterServcie {
 	@Override
 	public void findAndVerifyUserByLinkId(String registerLinkId) { 
 		RegisterUser registerUser=registerUserRepository.findByRegisterLinkIdAndExpiredOnGreaterThan(registerLinkId, new Date());
-		if(registerUser==null) {
-			// either link is wrong / expired / used
+		if(registerUser==null) { 
+			throw new RuntimeException("This link is either used/expired or wrong.");
 		}else {
-			// count method and check user in users table , user already exits
-			// copy data from RegisterUser to user and send a welcome email to end user
+			long count =userRepository.countByUsername(registerUser.getUsername());
+			if(count<=0) {
+				User user= new User();
+				user.setName(registerUser.getName());
+				user.setUsername(registerUser.getUsername());
+				user.setEnable(true); 
+				user.setPassword(registerUser.getPassword());
+				userRepository.save(user);
+			}else {
+				throw new RuntimeException("User already exits!");
+			}  
 		}
 	}
 
