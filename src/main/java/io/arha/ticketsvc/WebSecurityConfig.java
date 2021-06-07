@@ -12,15 +12,12 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import io.arha.ticketsvc.service.TicketUserDetailsService;
 import io.arha.ticketsvc.util.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	private TicketUserDetailsService userDetailsService;
+ 
 	
 	@Autowired
 	private JwtFilter jwtFilter;
@@ -33,10 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.userDetailsService(userDetailsService);
-//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
