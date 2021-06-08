@@ -32,6 +32,7 @@ public class User {
 	private Date lastUpdated;
 	@Column(name = "j_password", nullable = false)
 	private String password;
+	 
 
 	public String getPassword() {
 		return password;

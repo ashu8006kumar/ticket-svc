@@ -3,13 +3,17 @@ package io.arha.ticketsvc.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.arha.ticketsvc.dto.TicketDto;
+import io.arha.ticketsvc.repository.TicketRepository;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
+	@Autowired
+	private TicketRepository ticketRepository;
 	@Override
 	public List<TicketDto> getMyTickets() {
 		// Hard code/ fixed object 1
@@ -26,7 +30,7 @@ public class TicketServiceImpl implements TicketService {
 		List<TicketDto> data = new ArrayList<>();
 		data.add(one);
 		data.add(two);
-
+		ticketRepository.findAll();
 		return data;
 	}
 

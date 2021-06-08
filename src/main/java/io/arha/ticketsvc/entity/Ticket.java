@@ -1,5 +1,7 @@
 package io.arha.ticketsvc.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,13 +10,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.arha.ticketsvc.enums.TicketType;
+
 @Entity(name = "tickets")
 public class Ticket {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
 	@Column(name = "ticket_subject" ,nullable=false)
 	private String ticketSubject;
+	
+	@Column(name = "ticket_description" )
+	private String ticketDescription;
+	
+	@Column(name = "ticket_type" ,nullable=false)
+	private TicketType ticketType;
 	 
 	@JoinColumn(name="user_created_by_id")
 	@ManyToOne
@@ -25,6 +36,12 @@ public class Ticket {
 	@ManyToOne
 	private User workedBy;
 	
+
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Column(name = "last_updated")
+	private Date lastUpdated;
 
 	public Ticket() {
 	}
