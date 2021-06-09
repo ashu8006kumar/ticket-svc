@@ -58,13 +58,4 @@ public class HomeController {
 		return new TokenDto(jwtUtil.generateToken(userDetail));
 	}
 
-	@GetMapping("/my-tickets")
-	public TicketWrapperDto myTickects() {
-		List<TicketDto> data = ticketService.getMyTickets();
-		TicketWrapperDto ticketWrapperDto = new TicketWrapperDto();
-		ticketWrapperDto.setData(data);
-		return ticketWrapperDto;
-
-	}
-
 }

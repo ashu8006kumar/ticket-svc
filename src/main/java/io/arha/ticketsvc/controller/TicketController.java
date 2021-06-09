@@ -5,38 +5,55 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.arha.ticketsvc.dto.TicketDto;
 import io.arha.ticketsvc.dto.TicketSubmitionDto;
-import io.arha.ticketsvc.entity.Ticket;
-import io.arha.ticketsvc.repository.TicketRepository;
+import io.arha.ticketsvc.dto.TicketWrapperDto;
 import io.arha.ticketsvc.service.TicketService;
 
 @RestController
 @RequestMapping("/ticket")
-public class TicketController {
+public class TicketController { // C-R-U-D
 	@Autowired
 	private TicketService ticketService;
-	@Autowired
-	private TicketRepository ticketRepository;
 
-	public List<TicketDto> list() {
-		return null;
-
+	
+	@GetMapping("")
+	public TicketWrapperDto getUserTickteList() {
+		List<TicketDto> data = ticketService.getMyTickets();
+		TicketWrapperDto ticketWrapperDto = new TicketWrapperDto();
+		ticketWrapperDto.setData(data);
+		return ticketWrapperDto;
 	}
-
+	
 	@PostMapping("")
 	public void save(@Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
-		
-		List<Ticket> list = ticketRepository.findAllByTicketSubject(ticketSubmitionDto.getTicketSubject());
-		for (Ticket t : list) {
-			System.out.println(t.getId());
-			System.out.println(t.getTicketSubject());
-		}
+		ticketService.save(ticketSubmitionDto);
+	}
+
+	@GetMapping("/{id}")
+	public TicketDto read(@PathVariable Long id) {
+		return ticketService.get(id);
+	}
+
+	
+
+	@PutMapping("/{id}")
+	public void update(@PathVariable String id, @Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
+		// update ticket
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		 ticketService.delete(id);
 	}
 
 }

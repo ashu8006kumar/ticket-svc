@@ -3,6 +3,8 @@ package io.arha.ticketsvc.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,10 +20,17 @@ public class TicketUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//io.arha.ticketsvc.entity.User user = userRepository.findByUsername(username);
-		//if (user == null)
-		//	throw new UsernameNotFoundException("User not found.");
-		return new User("ashu8006kumar@gmail.com", "4321", new ArrayList<>());
+		io.arha.ticketsvc.entity.User user = userRepository.findByUsername(username);
+		if (user == null) 
+			throw new UsernameNotFoundException("User not found.");
+		return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
+	}
+	
+	io.arha.ticketsvc.entity.User currentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user=(User)auth.getPrincipal();
+		io.arha.ticketsvc.entity.User userDb = userRepository.findByUsername(user.getUsername());
+	 return userDb;
 	}
 
 }
