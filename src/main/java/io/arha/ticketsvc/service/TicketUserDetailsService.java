@@ -21,16 +21,15 @@ public class TicketUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		io.arha.ticketsvc.entity.User user = userRepository.findByUsername(username);
-		if (user == null) 
+		if (user == null)
 			throw new UsernameNotFoundException("User not found.");
 		return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
 	}
-	
+
 	io.arha.ticketsvc.entity.User currentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user=(User)auth.getPrincipal();
-		io.arha.ticketsvc.entity.User userDb = userRepository.findByUsername(user.getUsername());
-	 return userDb;
+		User user = (User) auth.getPrincipal();
+		return userRepository.findByUsername(user.getUsername());
 	}
 
 }
