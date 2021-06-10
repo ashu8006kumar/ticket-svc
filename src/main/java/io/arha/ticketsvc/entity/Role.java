@@ -22,4 +22,38 @@ public class Role {
 	
 	@Column(name="display_name" ,nullable=false,unique=true)
 	private String displayName;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public RoleType getName() {
+		return name;
+	}
+
+	public void setName(RoleType name) {
+		this.name = name;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public Role(RoleType name, String displayName) {
+		super();
+		this.name = name;
+		this.displayName = displayName;
+	}
+	
+	public Role() {
+		
+	}
 }
