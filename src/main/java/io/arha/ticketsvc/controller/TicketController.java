@@ -21,37 +21,66 @@ import io.arha.ticketsvc.service.TicketService;
 
 @RestController
 @RequestMapping("/ticket")
+/**
+ * All oprations realted to ticket
+ * 
+ * @author ashish
+ *
+ */
 public class TicketController { // C-R-U-D
 	@Autowired
 	private TicketService ticketService;
 
-	
-	@GetMapping("") 
+	/**
+	 * get all tickets created by me
+	 * 
+	 * @return
+	 */
+	@GetMapping("")
 	public TicketWrapperDto getTicketCreatedByUserList() {
 		List<TicketDto> data = ticketService.getMyTickets();
 		TicketWrapperDto ticketWrapperDto = new TicketWrapperDto();
 		ticketWrapperDto.setData(data);
 		return ticketWrapperDto;
 	}
-	
+
+	/**
+	 * save a new ticket
+	 * 
+	 * @param ticketSubmitionDto
+	 */
 	@PostMapping("")
 	public void save(@Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
 		ticketService.save(ticketSubmitionDto);
 	}
 
+	/**
+	 * get details of a ticket by id
+	 */
 	@GetMapping("/{id}")
 	public TicketSubmitionDto read(@PathVariable Long id) {
 		return ticketService.get(id);
-	} 
-
-	@PutMapping("/{id}")
-	public void update(@PathVariable Long id, @Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
-		 ticketService.update(id, ticketSubmitionDto);
 	}
 
+	/**
+	 * update a ticket
+	 * 
+	 * @param id
+	 * @param ticketSubmitionDto
+	 */
+	@PutMapping("/{id}")
+	public void update(@PathVariable Long id, @Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
+		ticketService.update(id, ticketSubmitionDto);
+	}
+
+	/**
+	 * delete a ticket
+	 * 
+	 * @param id
+	 */
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		 ticketService.delete(id);
+		ticketService.delete(id);
 	}
 
 }

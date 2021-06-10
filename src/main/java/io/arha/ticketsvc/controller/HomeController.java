@@ -18,6 +18,13 @@ import io.arha.ticketsvc.util.JwtUtil;
 
 @RestController
 @RequestMapping("/home")
+/**
+ * This Home contoller of application
+ * 
+ * 
+ * @author ashish
+ *
+ */
 public class HomeController {
 
 	@Autowired
@@ -28,7 +35,14 @@ public class HomeController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
+	
+	/**
+	 * 
+	 * @param loginDto
+	 * This will take username and password 
+	 * validate username and pass and genrate token
+	 * @return TokenDto
+	 */
 	@PostMapping("/auth")
 	public TokenDto login(@Valid @RequestBody LoginDto loginDto) {
 		authenticationManager
