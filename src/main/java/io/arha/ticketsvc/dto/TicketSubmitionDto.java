@@ -18,6 +18,26 @@ public class TicketSubmitionDto {
 	private TicketType type;
 	private String description;
 	private String link;
+	private String createdBy;
+	private String workedBy ;
+	public String getWorkedBy() {
+		return workedBy;
+	}
+
+	public void setWorkedBy(String workedBy) {
+		this.workedBy = workedBy;
+	}
+
+	public String getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(String lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	private String dateCreated;
+	private String lastUpdated;
 
 	public String getTicketSubject() {
 		return ticketSubject;
@@ -52,6 +72,22 @@ public class TicketSubmitionDto {
 	}
 
 	public TicketSubmitionDto() {
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@Override

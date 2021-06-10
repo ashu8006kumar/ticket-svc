@@ -27,7 +27,7 @@ public class TicketController { // C-R-U-D
 
 	
 	@GetMapping("")
-	public TicketWrapperDto getUserTickteList() {
+	public TicketWrapperDto getTicketCreatedByUserList() {
 		List<TicketDto> data = ticketService.getMyTickets();
 		TicketWrapperDto ticketWrapperDto = new TicketWrapperDto();
 		ticketWrapperDto.setData(data);
@@ -40,15 +40,13 @@ public class TicketController { // C-R-U-D
 	}
 
 	@GetMapping("/{id}")
-	public TicketDto read(@PathVariable Long id) {
+	public TicketSubmitionDto read(@PathVariable Long id) {
 		return ticketService.get(id);
-	}
-
-	
+	} 
 
 	@PutMapping("/{id}")
-	public void update(@PathVariable String id, @Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
-		// update ticket
+	public void update(@PathVariable Long id, @Valid @RequestBody TicketSubmitionDto ticketSubmitionDto) {
+		 ticketService.update(id, ticketSubmitionDto);
 	}
 
 	@DeleteMapping("/{id}")

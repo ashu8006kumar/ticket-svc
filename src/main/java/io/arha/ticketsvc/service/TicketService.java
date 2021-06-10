@@ -9,9 +9,11 @@ public interface TicketService {
 
 	List<TicketDto> getMyTickets();
 
-	TicketDto get(Long id);
+	TicketSubmitionDto get(Long id);
 
 	void save(TicketSubmitionDto ticketSubmitionDto);
 
 	void delete(Long id);
+
+	void update(Long id, TicketSubmitionDto ticketSubmitionDto);
 }
