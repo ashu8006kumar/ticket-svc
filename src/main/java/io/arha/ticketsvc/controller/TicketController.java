@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ public class TicketController { // C-R-U-D
 	private TicketService ticketService;
 
 	
-	@GetMapping("")
+	@GetMapping("") 
 	public TicketWrapperDto getTicketCreatedByUserList() {
 		List<TicketDto> data = ticketService.getMyTickets();
 		TicketWrapperDto ticketWrapperDto = new TicketWrapperDto();

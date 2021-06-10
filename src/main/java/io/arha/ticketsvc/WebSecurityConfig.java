@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import io.arha.ticketsvc.enums.RoleType;
 import io.arha.ticketsvc.util.JwtFilter;
 
 @Configuration
@@ -27,6 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests().
 		antMatchers("/home/auth","/register","/register/**")
 		.permitAll();
+		//http.authorizeRequests().
+		//antMatchers("/admin").hasAnyRole("ADMIN");//Do not add ROLE_
+		http.authorizeRequests().
+		antMatchers("/admin").hasAnyAuthority("ROLE_ADMIN"); // you need to add ROLE
 		http.authorizeRequests().anyRequest().authenticated();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
