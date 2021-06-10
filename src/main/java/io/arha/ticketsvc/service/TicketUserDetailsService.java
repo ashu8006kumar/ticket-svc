@@ -23,7 +23,9 @@ public class TicketUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 	@Autowired
 	private UserRoleRepository userRoleRepository;
-
+    /**
+     * load user and its roles from database
+     */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		io.arha.ticketsvc.entity.User user = userRepository.findByUsername(username);
@@ -37,7 +39,10 @@ public class TicketUserDetailsService implements UserDetailsService {
 		}
 		return new User(user.getUsername(), user.getPassword(), authorities);
 	}
-
+	/**
+	 * get logged in user
+	 * @return
+	 */
 	io.arha.ticketsvc.entity.User currentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) auth.getPrincipal();

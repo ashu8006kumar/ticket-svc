@@ -22,6 +22,9 @@ public class TicketServiceImpl implements TicketService {
 	private TicketUserDetailsService userDetailsService;
 
 	@Override
+	/**
+	 * get tickets created by me
+	 */
 	public List<TicketDto> getMyTickets() {
 		return ticketRepository.findAll().stream().map(ticket -> {
 			TicketDto dto = new TicketDto();
@@ -31,7 +34,9 @@ public class TicketServiceImpl implements TicketService {
 			return dto;
 		}).collect(Collectors.toList());
 	}
-
+	/**
+	 * get ticket by Id
+	 */
 	@Override
 	public TicketSubmitionDto get(Long id) {
 		// TODO admin , user created , working on it
@@ -58,7 +63,9 @@ public class TicketServiceImpl implements TicketService {
 			throw new RuntimeException("Record not found");
 		}
 	}
-
+	/** 
+	 * save ticket
+	 */
 	@Override
 	public void save(TicketSubmitionDto ticketSubmitionDto) {
 		Ticket ticket = new Ticket();
