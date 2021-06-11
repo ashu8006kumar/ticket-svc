@@ -114,6 +114,7 @@ public class Ticket {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
+	
 	@PrePersist
 	void saveDateCreated() {
 		this.createdDate= new Date();
