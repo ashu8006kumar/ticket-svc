@@ -2,6 +2,7 @@ package io.arha.ticketsvc.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import io.arha.ticketsvc.dto.UserDto;
 import io.arha.ticketsvc.dto.UserSubmitDto;
+import io.arha.ticketsvc.entity.Role;
 import io.arha.ticketsvc.entity.User;
 import io.arha.ticketsvc.entity.UserRole;
 import io.arha.ticketsvc.enums.RoleType;
+import io.arha.ticketsvc.repository.RoleRepository;
 import io.arha.ticketsvc.repository.UserRepository;
 import io.arha.ticketsvc.repository.UserRoleRepository;
 
@@ -22,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Override
 	public List<UserDto> findAll() {
@@ -57,27 +63,52 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void save(UserSubmitDto userSubmitDto) {
-		// TODO Auto-generated method stub
-		
+		User user = new User();
+		user.setUsername(userSubmitDto.getUsername());
+		user.setName(userSubmitDto.getName());
+		user.setEnable(true);
+		user.setPassword(UUID.randomUUID().toString());
+		userRepository.save(user);
+		List<Role> roles = roleRepository.findAllByName(userSubmitDto.getRoles());
+		for (Role role : roles) {
+			UserRole uRole2 = new UserRole(role, user);
+			userRoleRepository.save(uRole2);
+		}
+
 	}
 
 	@Override
 	public void update(Long id, @Valid UserSubmitDto userSubmitDto) {
-		// TODO Auto-generated method stub
-		
+		Optional<User> userOptional = userRepository.findById(id);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			List<UserRole> roles = userRoleRepository.findAllByUser(user);
+			userRoleRepository.deleteAll(roles);
+			user.setUsername(userSubmitDto.getUsername());
+			user.setName(userSubmitDto.getName());
+			userRepository.save(user);
+			List<Role> addRoles = roleRepository.findAllByName(userSubmitDto.getRoles());
+			for (Role role : addRoles) {
+				UserRole uRole2 = new UserRole(role, user);
+				userRoleRepository.save(uRole2);
+			}
+		} else {
+			throw new RuntimeException("User not found");
+		}
+
 	}
 
 	@Override
 	public void delete(Long id) {
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isPresent()) {
-			User user=userOptional.get(); 
+			User user = userOptional.get();
 			user.setEnable(false);
 			userRepository.save(user);
-		}else {
+		} else {
 			throw new RuntimeException("User not found");
 		}
-		
+
 	}
 
 }
