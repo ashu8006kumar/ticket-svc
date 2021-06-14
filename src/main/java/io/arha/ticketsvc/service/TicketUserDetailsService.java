@@ -23,24 +23,31 @@ public class TicketUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 	@Autowired
 	private UserRoleRepository userRoleRepository;
-    /**
-     * load user and its roles from database
-     */
+
+	/**
+	 * load user and its roles from database
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		io.arha.ticketsvc.entity.User user = userRepository.findByUsername(username);
-		if (user == null)
+		if (user == null) {
 			throw new UsernameNotFoundException("User not found.");
-		//get Role from data base
-		List<UserRole> userRoles=userRoleRepository.findAllByUser(user);
-		List<SimpleGrantedAuthority> authorities= new ArrayList<>();
-		for (UserRole userRole : userRoles) {
-			authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName().name()));
+		} else if (!user.getEnable()) {
+			throw new RuntimeException("User is disabled. Please contact to admin.");
+		} else {
+			// get Role from data base
+			List<UserRole> userRoles = userRoleRepository.findAllByUser(user);
+			List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+			for (UserRole userRole : userRoles) {
+				authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName().name()));
+			}
+			return new User(user.getUsername(), user.getPassword(), authorities);
 		}
-		return new User(user.getUsername(), user.getPassword(), authorities);
 	}
+
 	/**
 	 * get logged in user
+	 * 
 	 * @return
 	 */
 	io.arha.ticketsvc.entity.User currentUser() {

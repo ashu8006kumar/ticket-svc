@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.arha.ticketsvc.dto.UserDto;
+import io.arha.ticketsvc.dto.UserSubmitDto;
 import io.arha.ticketsvc.entity.User;
 import io.arha.ticketsvc.entity.UserRole;
 import io.arha.ticketsvc.enums.RoleType;
@@ -50,6 +53,31 @@ public class UserServiceImpl implements UserService {
 		List<RoleType> roles = userRoles.stream().map(userRole -> userRole.getRole().getName())
 				.collect(Collectors.toList());
 		return new UserDto(user.getId(), user.getUsername(), user.getName(), user.getEnable(), roles);
+	}
+
+	@Override
+	public void save(UserSubmitDto userSubmitDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Long id, @Valid UserSubmitDto userSubmitDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Long id) {
+		Optional<User> userOptional = userRepository.findById(id);
+		if (userOptional.isPresent()) {
+			User user=userOptional.get(); 
+			user.setEnable(false);
+			userRepository.save(user);
+		}else {
+			throw new RuntimeException("User not found");
+		}
+		
 	}
 
 }
