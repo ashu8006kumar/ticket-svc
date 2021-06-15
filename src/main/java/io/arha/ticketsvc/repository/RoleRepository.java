@@ -12,5 +12,5 @@ import io.arha.ticketsvc.enums.RoleType;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 	Role findByName(RoleType name);
 
-	List<Role> findAllByName(List<RoleType> roles);
+	List<Role> findAllByNameIn(List<RoleType> roles);
 }

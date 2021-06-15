@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import io.arha.ticketsvc.dto.UserDto;
 import io.arha.ticketsvc.dto.UserSubmitDto;
@@ -18,7 +19,7 @@ import io.arha.ticketsvc.enums.RoleType;
 import io.arha.ticketsvc.repository.RoleRepository;
 import io.arha.ticketsvc.repository.UserRepository;
 import io.arha.ticketsvc.repository.UserRoleRepository;
-
+@Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
 		user.setEnable(true);
 		user.setPassword(UUID.randomUUID().toString());
 		userRepository.save(user);
-		List<Role> roles = roleRepository.findAllByName(userSubmitDto.getRoles());
+		List<Role> roles = roleRepository.findAllByNameIn(userSubmitDto.getRoles());
 		for (Role role : roles) {
 			UserRole uRole2 = new UserRole(role, user);
 			userRoleRepository.save(uRole2);
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserService {
 			user.setUsername(userSubmitDto.getUsername());
 			user.setName(userSubmitDto.getName());
 			userRepository.save(user);
-			List<Role> addRoles = roleRepository.findAllByName(userSubmitDto.getRoles());
+			List<Role> addRoles = roleRepository.findAllByNameIn(userSubmitDto.getRoles());
 			for (Role role : addRoles) {
 				UserRole uRole2 = new UserRole(role, user);
 				userRoleRepository.save(uRole2);
