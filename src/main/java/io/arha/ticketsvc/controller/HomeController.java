@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import io.arha.ticketsvc.service.TicketUserDetailsService;
 import io.arha.ticketsvc.util.JwtUtil;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping(value= {"","/home"})
 /**
  * This Home contoller of application
  * 
@@ -35,6 +36,11 @@ public class HomeController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@GetMapping("")
+	public String index() {
+		return "hi";
+	}
 	
 	/**
 	 * 

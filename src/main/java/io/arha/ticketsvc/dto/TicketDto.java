@@ -1,11 +1,20 @@
 package io.arha.ticketsvc.dto;
 
-public class TicketDto { 
+public class TicketDto {
+	private Long id;
 	private String ticketSubject;
 	private String createdBy;
 	private String dateCreated;
 
 	public TicketDto() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getTicketSubject() {

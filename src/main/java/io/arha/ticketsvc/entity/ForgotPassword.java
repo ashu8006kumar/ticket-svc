@@ -25,6 +25,9 @@ public class ForgotPassword {
 
 	@Column(name = "enpired_on", nullable = false)
 	private Date expiredOn;
+	 
+	 
+	
 
 	public Long getId() {
 		return id;

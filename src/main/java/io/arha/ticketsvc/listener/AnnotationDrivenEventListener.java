@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import io.arha.ticketsvc.entity.Role;
@@ -22,7 +23,9 @@ public class AnnotationDrivenEventListener {
 	private UserRepository userRepository;
 	@Autowired
 	private UserRoleRepository userRoleRepository;
-
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		ApplicationContext applicationContext = event.getApplicationContext();
@@ -54,7 +57,7 @@ public class AnnotationDrivenEventListener {
 			user.setEnable(true);
 			user.setUsername("admin@ticketapp.com");
 			user.setName("Admin user");
-			user.setPassword("XYz");
+			user.setPassword(passwordEncoder.encode("XYz"));
 			userRepository.save(user);
 			UserRole uRole = new UserRole(adminRole, user);
 			UserRole uRole2 = new UserRole(userRole, user);

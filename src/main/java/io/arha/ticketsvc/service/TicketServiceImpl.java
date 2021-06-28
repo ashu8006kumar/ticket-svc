@@ -28,6 +28,7 @@ public class TicketServiceImpl implements TicketService {
 	public List<TicketDto> getMyTickets() {
 		return ticketRepository.findAll().stream().map(ticket -> {
 			TicketDto dto = new TicketDto();
+			dto.setId(ticket.getId());
 			dto.setTicketSubject(ticket.getTicketSubject());
 			dto.setCreatedBy(ticket.getCreatedBy().getName());
 			dto.setDateCreated(ticket.getCreatedDate().toString());

@@ -11,7 +11,7 @@ import io.arha.ticketsvc.props.EmailProps;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-	@Autowired
+	@Autowired 
 	private EmailProps emailProps;
 
 	private JavaMailSenderImpl prepareJavaMailSender() {
